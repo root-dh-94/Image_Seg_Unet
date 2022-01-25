@@ -36,10 +36,11 @@ class upStep(nn.Module):
 
 class UNet(nn.Module):
   def __init__(self):
-    super(upStep, self).__init__()
+    super(UNet, self).__init__()
     #todo
     #initialize the complete model
-
+    self.downStep = downStep()
+    self.upStep = upStep()
    def forward(self):
     #todo
     #implement the forward path
