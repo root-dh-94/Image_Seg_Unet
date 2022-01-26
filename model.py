@@ -5,14 +5,17 @@ import torch.nn.functional as F
 #import any other libraries you need below this line
 
 class twoConvBlock(nn.Module):
-  def __init__(self):
+  def __init__(self, in_ch,out_ch):
     super(twoConvBlock, self).__init__()
     #todo
     #initialize the block
+    self.layer_block = nn.Sequntial(nn.Conv2D(in_ch,out_ch,3),nn.ReLU(),nn.Conv2D(out_ch,out_ch,3),nn.BatchNorm2d(out_ch),nn.ReLU())
 
-  def forward(self):
+  def forward(self,input):
     #todo
     #implement the forward path
+    block = self.layer_block(input)
+    return input
 
 class downStep(nn.Module):
   def __init__(self):
