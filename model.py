@@ -41,9 +41,23 @@ class UNet(nn.Module):
     #initialize the complete model
     self.downStep = downStep()
     self.upStep = upStep()
-   def forward(self):
+
+  def forward(self, input):
     #todo
     #implement the forward path
+    layer_1 = self.downStep
+    pool_1 = nn.MaxPool2d(2, stride = 2)(layer_1)
+    layer_2 = self.downStep
+    pool_2 = nn.MaxPool2d(2, stride = 2)(layer_1)
+    layer_3 = self.downStep
+    pool_3 = nn.MaxPool2d(2, stride = 2)(layer_1)
+    layer_4 = self.downStep
+    pool_4 = nn.MaxPool2d(2, stride = 2)(layer_1)
+    layer_5 = self.downStep
+
+
+
+
 
 
 
