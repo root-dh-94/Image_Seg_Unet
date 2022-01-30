@@ -22,10 +22,14 @@ class downStep(nn.Module):
     super(downStep, self).__init__()
     #todo
     #initialize the down path
-    self.layer_1 = nn.Sequential(twoConvBlock(1,64),nn.MaxPool2D(2,stride=2))
-    self.layer_2 = nn.Sequential(twoConvBlock(64,128),nn.MaxPool2D(2,stride=2))
-    self.layer_3 = nn.Sequential(twoConvBlock(128,256),nn.MaxPool2D(2,stride=2))
-    self.layer_4 = nn.Sequential(twoConvBlock(256,512),nn.MaxPool2D(2,stride=2))
+    self.layer_1 = twoConvBlock(1,64)
+    self.pool_1 = nn.MaxPool2D(2,stride=2)
+    self.layer_2 = twoConvBlock(64,128)
+    self.pool_2 = nn.MaxPool2D(2,stride=2)
+    self.layer_3 = twoConvBlock(128,256)
+    self.pool_3 = nn.MaxPool2D(2,stride=2)
+    self.layer_4 = twoConvBlock(256,512)
+    self.pool_4 = nn.MaxPool2D(2,stride=2)
     self.layer_5 = twoConvBlock(512,1024)
 
   def forward(self):
