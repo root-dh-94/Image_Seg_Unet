@@ -90,15 +90,10 @@ class UNet(nn.Module):
   def forward(self, input):
     #todo
     #implement the forward path
-    layer_1 = self.downStep
-    pool_1 = nn.MaxPool2d(2, stride = 2)(layer_1)
-    layer_2 = self.downStep
-    pool_2 = nn.MaxPool2d(2, stride = 2)(layer_1)
-    layer_3 = self.downStep
-    pool_3 = nn.MaxPool2d(2, stride = 2)(layer_1)
-    layer_4 = self.downStep
-    pool_4 = nn.MaxPool2d(2, stride = 2)(layer_1)
-    layer_5 = self.downStep
+    down,skip_1,skip_2,skip_3,skip_4 = self.downStep(input)
+    output = self.upStep(down,skip_1,skip_2,skip_3,skip_4)
+
+    return output
 
 
 
