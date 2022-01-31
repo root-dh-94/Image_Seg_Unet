@@ -63,6 +63,21 @@ class upStep(nn.Module):
   def forward(self, input,skip_1,skip_2,skip_3,skip_4):
     #todo
     #implement the forward path
+    upsample = self.upsample(input)
+    up_layer_1 = self.layer_1(torch.cat((skip_4,upsample)))
+
+    upsample = self.upsample(up_layer_1)
+    up_layer_2 = self.layer_2(torch.cat((skip_3,upsample)))
+
+    upsample = self.upsample(up_layer_2)
+    up_layer_3 = self.layer_3(torch.cat((skip_2,upsample)))
+
+    upsample = self.upsample(up_layer_3)
+    up_layer_4 = self.layer_4(torch.cat((skip_1,upsample)))
+
+    output = self.layer_5(up_layer_4)
+
+    return output
 
 class UNet(nn.Module):
   def __init__(self):
