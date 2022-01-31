@@ -90,7 +90,7 @@ class UNet(nn.Module):
   def forward(self, input):
     #todo
     #implement the forward path
-    down,skip_1,skip_2,skip_3,skip_4 = downStep(input)
+    down,skip_1,skip_2,skip_3,skip_4 = self.downStep(input)
     output = self.upStep(down,skip_1,skip_2,skip_3,skip_4)
 
     return output
