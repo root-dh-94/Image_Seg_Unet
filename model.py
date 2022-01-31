@@ -25,16 +25,28 @@ class downStep(nn.Module):
     self.layer_1 = twoConvBlock(1,64)
     self.pool_1 = nn.MaxPool2D(2,stride=2)
     self.layer_2 = twoConvBlock(64,128)
-    self.pool_2 = nn.MaxPool2D(2,stride=2)
     self.layer_3 = twoConvBlock(128,256)
-    self.pool_3 = nn.MaxPool2D(2,stride=2)
     self.layer_4 = twoConvBlock(256,512)
-    self.pool_4 = nn.MaxPool2D(2,stride=2)
     self.layer_5 = twoConvBlock(512,1024)
 
-  def forward(self):
+  def forward(self,input):
     #todo
     #implement the forward path
+    conv_layer_1 = self.layer_1(input)
+    pool = self.pool_1(conv_layer_1)
+
+    conv_layer_2 = self.layer_2(pool)
+    pool = self.pool_1(conv_layer_2)
+
+    conv_layer_3 = self.layer_3(pool)
+    pool = self.pool_1(conv_layer_3)
+
+    conv_layer_4 = self.layer_4(pool)
+    pool = self.pool_1(conv_layer_4)
+
+    output = self.layer_5(pool)
+
+    return output, conv_layer_1, conv_layer_2, conv_layer_3, conv_layer_4
 
 class upStep(nn.Module):
   def __init__(self):
