@@ -53,8 +53,14 @@ class upStep(nn.Module):
     super(upStep, self).__init__()
     #todo
     #initialize the up path
+    self.upsample = nn.Upsample(scale_factor = 2, align_corners = True)
+    self.layer_1 = twoConvBlock(1024,512)
+    self.layer_2 = twoConvBlock(512,256)
+    self.layer_3 = twoConvBlock(256, 128)
+    self.layer_4 = twoConvBlock(128,64)
+    self.layer_5 = nn.Conv2D(64,2,1)
 
-  def forward(self):
+  def forward(self, input,skip_1,skip_2,skip_3,skip_4):
     #todo
     #implement the forward path
 
