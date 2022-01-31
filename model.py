@@ -53,7 +53,7 @@ class upStep(nn.Module):
     super(upStep, self).__init__()
     #todo
     #initialize the up path
-    self.upsample = nn.Upsample(scale_factor = 2, align_corners = True)
+    self.upsample = nn.Upsample(scale_factor = 2, mode = "bilinear" align_corners = True)
     self.layer_1 = twoConvBlock(1024,512)
     self.layer_2 = twoConvBlock(512,256)
     self.layer_3 = twoConvBlock(256, 128)
