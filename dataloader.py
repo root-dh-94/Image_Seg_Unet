@@ -21,6 +21,11 @@ class Cell_data(Dataset):
         super(Cell_data, self).__init__()
         # todo
         # initialize the data class
+        self.data_dir = data_dir
+        self.size = size
+        self.train = train
+        self.split = train_test_split
+        self.augment = augment_data
 
     def __getitem__(self, idx):
         # todo
