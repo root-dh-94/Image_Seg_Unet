@@ -22,6 +22,8 @@ class Cell_data(Dataset):
         # todo
         # initialize the data class
         self.data_dir = data_dir
+        self.img_pth = os.path.join(self.data_dir, "scans")
+        self.lbl_pth = os.path.join(self.data_dir, "labels")
         self.size = size
         self.train = train
         self.split = train_test_split
@@ -29,8 +31,9 @@ class Cell_data(Dataset):
 
     def __getitem__(self, idx):
         # todo
-
         # load image and mask from index idx of your data
+    
+
 
         # data augmentation part
         if self.augment_data:
