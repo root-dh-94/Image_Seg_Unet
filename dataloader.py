@@ -22,8 +22,19 @@ class Cell_data(Dataset):
         # todo
         # initialize the data class
         self.data_dir = data_dir
-        self.img_pth = os.path.join(self.data_dir, "scans")
-        self.lbl_pth = os.path.join(self.data_dir, "labels")
+        self.img_dir = os.path.join(self.data_dir, "scans")
+        self.lbl_dir = os.path.join(self.data_dir, "labels")
+        self.imgs = os.listdir(self.img_dir)
+        self.lbls = os.listdir(self.lbl_dir)
+        self.img_path = []
+        self.lbl_path = []
+
+        for img in self.imgs:
+            self.img_path.append(os.path.join(self.img_dir, img))
+
+        for lbl in self.lbls:
+            self.lbl_path.append(os.path.join(self.lbl_dir, lbl))
+
         self.size = size
         self.train = train
         self.split = train_test_split
@@ -32,28 +43,33 @@ class Cell_data(Dataset):
     def __getitem__(self, idx):
         # todo
         # load image and mask from index idx of your data
+        img = self.img_path[idx]
+        lbl = self.lbl_path[idx]
+
+        #image = Image.open(img)
+        #image.show
     
 
 
-        # data augmentation part
-        if self.augment_data:
-            augment_mode = np.random.randint(0, 4)
-            if augment_mode == 0:
-                # todo
-                # flip image vertically
-            elif augment_mode == 1:
-                # todo
-                # flip image horizontally
-            elif augment_mode == 2:
-                # todo
-                # zoom image
-            else:
+        # # data augmentation part
+        # if self.augment_data:
+        #     augment_mode = np.random.randint(0, 4)
+        #     if augment_mode == 0:
+        #         # todo
+        #         # flip image vertically
+        #     elif augment_mode == 1:
+        #         # todo
+        #         # flip image horizontally
+        #     elif augment_mode == 2:
+        #         # todo
+        #         # zoom image
+        #     else:
                 # todo
                 # rotate image
 
         # todo
-        # return image and mask in tensors
+        return img,lbl
 
     def __len__(self):
-        return len(self.images)
+        return len(self.imgs)
 

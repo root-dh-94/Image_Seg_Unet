@@ -9,13 +9,15 @@ class twoConvBlock(nn.Module):
     super(twoConvBlock, self).__init__()
     #todo
     #initialize the block
-    self.layer_block = nn.Sequntial(nn.Conv2D(in_ch,out_ch,3),nn.ReLU(),nn.Conv2D(out_ch,out_ch,3),nn.BatchNorm2d(out_ch),nn.ReLU())
+    self.input_channel = in_ch
+    self.output_channel = out_ch
+    self.layer_block = nn.Sequntial(nn.Conv2D(self.input_channel,self.output_channel,3),nn.ReLU(),nn.Conv2D(self.output_channel,oself.output_channel,3),nn.BatchNorm2d(self.output_channel),nn.ReLU())
 
   def forward(self,input):
     #todo
     #implement the forward path
     block = self.layer_block(input)
-    return input
+    return block
 
 class downStep(nn.Module):
   def __init__(self):
