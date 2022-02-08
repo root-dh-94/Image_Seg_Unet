@@ -23,31 +23,39 @@ class Cell_data(Dataset):
         # todo
         # initialize the data class
         self.data_dir = data_dir
-        self.img_dir = os.path.join(self.data_dir, "scans")
-        self.lbl_dir = os.path.join(self.data_dir, "labels")
-        self.imgs = os.listdir(self.img_dir)
-        self.lbls = os.listdir(self.lbl_dir)
-        self.img_path = []
-        self.lbl_path = []
-
-        for img in self.imgs:
-            self.img_path.append(os.path.join(self.img_dir, img))
-
-        for lbl in self.lbls:
-            self.lbl_path.append(os.path.join(self.lbl_dir, lbl))
-
         self.size = size
         self.train = train
         self.split = train_test_split
         self.augment = augment_data
-        
+        self.img_dir = os.path.join(self.data_dir, "scans")
+        self.lbl_dir = os.path.join(self.data_dir, "labels")
+        self.imgs = sorted(os.listdir(self.img_dir))[0:]
+        self.lbls = sorted(os.listdir(self.lbl_dir))
 
+        if self.train:
+            self.imgs = self.imgs[0:int(self.split*len(self.imgs))]
+            self.lbls = self.lbls[0:int(self.split*len(self.lbls))]
+
+        else:
+            self.imgs = self.imgs[int(self.split*len(self.imgs)):]
+            self.lbls = self.lbls[int(self.split*len(self.lbls)):]
+        print(len(self.imgs))
+        self.img_path = []
+        self.lbl_path = []
+
+        for img in self.imgs:
+             self.img_path.append(os.path.join(self.img_dir, img))
+
+        for lbl in self.lbls:
+            self.lbl_path.append(os.path.join(self.lbl_dir, lbl))
+
+        
     def __getitem__(self, idx):
         # todo
         # load image and mask from index idx of your data
         image = self.img_path[idx]
         label = self.lbl_path[idx]
-        print(image)
+        
         img = Image.open(image)
         lbl = Image.open(label)
 
@@ -60,10 +68,7 @@ class Cell_data(Dataset):
         img = torch.from_numpy(img).unsqueeze(0)
         lbl = TF.to_tensor(lbl)
 
-        print (img.size(),lbl.size())
-
         # # data augmentation part
-        
         if self.augment:
             augment_mode = np.random.randint(0, 4)
             if augment_mode == 0:
