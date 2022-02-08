@@ -47,30 +47,45 @@ class Cell_data(Dataset):
         # load image and mask from index idx of your data
         image = self.img_path[idx]
         label = self.lbl_path[idx]
+        print(image)
         img = Image.open(image)
         lbl = Image.open(label)
 
+        img = TF.resize(img,self.size)
+        lbl = TF.resize(lbl,self.size)
+
+        img = np.asarray(img)
+        img = img/np.max(img)
+        
+        img = torch.from_numpy(img).unsqueeze(0)
+        lbl = TF.to_tensor(lbl)
+
+        print (img.size(),lbl.size())
+
         # # data augmentation part
-        if self.augment_data:
+        
+        if self.augment:
             augment_mode = np.random.randint(0, 4)
             if augment_mode == 0:
                 # todo
                 # flip image vertically
                 img = TF.vflip(img)
                 lbl = TF.vflip(lbl)
+                print("v")
 
             elif augment_mode == 1:
                 # todo
                 # flip image horizontally
                 img = TF.hflip(img)
                 lbl = TF.hflip(lbl)
+                print("h")
 
             elif augment_mode == 2:
                 # todo
                 # zoom image
-                w,h = img.size
-                img = TF.center_crop(img, (h,w))
-                lbl = TF.center_crop(lbl, (h,w))
+                
+                
+                print("z")
 
             else:
                 # todo
@@ -78,8 +93,11 @@ class Cell_data(Dataset):
                 angle = random.randint(-45,45)
                 img = TF.rotate(img,angle)
                 lbl = TF.rotate(lbl,angle)
+                print("r")
 
         # todo
+    
+        
         return img,lbl
 
     def __len__(self):
