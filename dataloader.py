@@ -9,6 +9,7 @@ import random
 from PIL import Image, ImageOps
 
 #import any other libraries you need below this line
+from torchvision.transforms import functional as TF
 
 class Cell_data(Dataset):
     def __init__(self, data_dir, size, train='True', train_test_split=0.8, augment_data=True):
@@ -39,33 +40,44 @@ class Cell_data(Dataset):
         self.train = train
         self.split = train_test_split
         self.augment = augment_data
+        
 
     def __getitem__(self, idx):
         # todo
         # load image and mask from index idx of your data
-        img = self.img_path[idx]
-        lbl = self.lbl_path[idx]
-
-        #image = Image.open(img)
-        #image.show
-    
-
+        image = self.img_path[idx]
+        label = self.lbl_path[idx]
+        img = Image.open(image)
+        lbl = Image.open(label)
 
         # # data augmentation part
-        # if self.augment_data:
-        #     augment_mode = np.random.randint(0, 4)
-        #     if augment_mode == 0:
-        #         # todo
-        #         # flip image vertically
-        #     elif augment_mode == 1:
-        #         # todo
-        #         # flip image horizontally
-        #     elif augment_mode == 2:
-        #         # todo
-        #         # zoom image
-        #     else:
+        if self.augment_data:
+            augment_mode = np.random.randint(0, 4)
+            if augment_mode == 0:
+                # todo
+                # flip image vertically
+                img = TF.vflip(img)
+                lbl = TF.vflip(lbl)
+
+            elif augment_mode == 1:
+                # todo
+                # flip image horizontally
+                img = TF.hflip(img)
+                lbl = TF.hflip(lbl)
+
+            elif augment_mode == 2:
+                # todo
+                # zoom image
+                w,h = img.size
+                img = TF.center_crop(img, (h,w))
+                lbl = TF.center_crop(lbl, (h,w))
+
+            else:
                 # todo
                 # rotate image
+                angle = random.randint(-45,45)
+                img = TF.rotate(img,angle)
+                lbl = TF.rotate(lbl,angle)
 
         # todo
         return img,lbl

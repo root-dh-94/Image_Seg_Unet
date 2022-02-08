@@ -53,9 +53,9 @@ testloader = DataLoader(testset, batch_size=4)
 for i, data in enumerate(trainloader):
     image, label = data
     
-    img = Image.open(label[0])
-    im = np.asarray(img)
-    print(im.shape)
+    #im = np.asarray(img)
+    #im = torch.from_numpy(im)
+    print(image[0])
     
     break
 # model.train()
